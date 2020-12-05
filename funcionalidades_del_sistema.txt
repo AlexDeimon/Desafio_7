@@ -40,4 +40,7 @@
 		3.4.1 Verificacion de existencia
 		3.4.2 mensaje de confirmación
 		3.4.3 Actualizacion de la BD
-
+cerrar sesion
+	5.1 Cerrar la conexion con la BD
+	5.2 regreso a la ventana de login
+		5.2.1 Comfirmación sesion cerrada
