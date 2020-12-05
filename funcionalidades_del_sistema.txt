@@ -5,3 +5,21 @@
 	1.2 acceso a la app
 		1.2.1 conexion con la BD
 
+2. CRUD de datos del cliente
+	2.1 Insersion de datos
+		2.1.1 Verificacion de existencia
+		2.1.2 mensaje de confirmación
+		2.1.3 Actualizacion de la BD
+	2.2 actualizacion
+		2.2.1 Verificacion de existencia
+		2.2.2 mensaje de confirmación
+		2.2.3 Actualizacion de la BD
+	2.3 eliminacion
+		2.3.1 Verificacion de existencia
+		2.3.2 mensaje de confirmación
+		2.3.3 Actualizacion de la BD
+	2.4 consulta
+		2.4.1 Verificacion de existencia
+		2.4.2 mensaje de confirmación
+		2.4.3 Actualizacion de la BD
+
