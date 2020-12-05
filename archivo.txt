@@ -1,6 +1,0 @@
-texto cualquiera
-linea 2
-linea 3
-cuarta linea
-Quinta linea
-Sexta linea
