@@ -1,5 +1,5 @@
 from db.client_db import ClientInDB
-from db.client_db import update_client, get_client
+from db.client_db import update_client, get_client, database_clients
 
 from models.client_models import ClientSearch, ClientIn, ClientOut
 
@@ -27,3 +27,9 @@ async def search_client(client_search: ClientSearch):
         raise HTTPException(status_code=404, detail="El cliente no existe")
     if client_in_db.cedula == client_search.cedula:
         return client_in_db
+
+#Actualizar Cliente
+@api.post("/client/{cedula}/")
+async def search_client(client_in_db: ClientInDB):
+    database_clients.update({client_in_db.cedula:client_in_db})
+    return database_clients[client_in_db.cedula]
