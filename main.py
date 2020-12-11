@@ -12,18 +12,8 @@ from fastapi import FastAPI, HTTPException
 
 api = FastAPI()
 
-#Verificar Cliente
-@api.post("/client/auth/")
-async def auth_client(client_in: ClientIn):
-    client_in_db = get_client(client_in.cedula)
-    if client_in_db == None:
-        raise HTTPException(status_code=404, detail="El cliente no existe")
-    if client_in_db.nombres != client_in.nombres:
-        return {"Autenticado": False}
-    return {"Autenticado": True}
-
 #Consultar Cliente
-@api.get("/client/{cedula}/")
+@api.get("/client/search/")
 async def search_client(client_search: ClientSearch):
     client_in_db = get_client(client_search.cedula)
     if client_in_db == None:
@@ -32,9 +22,15 @@ async def search_client(client_search: ClientSearch):
         return client_in_db
 
 #Actualizar Cliente
-@api.post("/client/{cedula}/")
+@api.post("/client/update/")
 async def search_client(client_in_db: ClientInDB):
     database_clients.update({client_in_db.cedula:client_in_db})
+    return database_clients[client_in_db.cedula]
+
+#Agregar Cliente
+@api.post("/client/new/")
+async def update_client(client_in_db: ClientInDB):
+    database_clients[client_in_db.cedula]=client_in_db
     return database_clients[client_in_db.cedula]
 
 #Verificar usuario
