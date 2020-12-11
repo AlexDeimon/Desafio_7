@@ -38,6 +38,13 @@ async def update_client(client_in_db: ClientInDB):
     database_clients[client_in_db.cedula]=client_in_db
     return database_clients[client_in_db.cedula]
 
+#Eliminar Cliente
+@api.post("/client/delete/")
+async def update_client(client_in_db: ClientInDB):
+    if database_clients[client_in_db.cedula]:
+        database_clients.pop(client_in_db.cedula)
+        raise HTTPException(status_code=500, detail="El cliente fue borrado con exito")
+
 #Verificar usuario
 @api.post("/user/auth/")
 async def auth_user(user_in: UserIn):
