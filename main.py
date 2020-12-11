@@ -22,12 +22,12 @@ async def get_all_clients():
 async def search_client(client_search: ClientSearch):
     client_in_db = get_client(client_search.cedula)
     if client_in_db == None:
-        raise HTTPException(status_code=404, detail="El cliente no existe")
+        return {"El cliente no existe"}
     if client_in_db.cedula == client_search.cedula:
         return client_in_db
 
 #Actualizar Cliente
-@api.post("/client/update/")
+@api.put("/client/update/")
 async def search_client(client_in_db: ClientInDB):
     database_clients.update({client_in_db.cedula:client_in_db})
     return database_clients[client_in_db.cedula]
@@ -35,15 +35,21 @@ async def search_client(client_in_db: ClientInDB):
 #Agregar Cliente
 @api.post("/client/new/")
 async def update_client(client_in_db: ClientInDB):
-    database_clients[client_in_db.cedula]=client_in_db
-    return database_clients[client_in_db.cedula]
+    if client_in_db.cedula not in database_clients:
+        database_clients[client_in_db.cedula]=client_in_db
+        return {"El cliente fue creado con exito"}
+    else:
+        return {"El cliente ya existe"}
 
 #Eliminar Cliente
 @api.post("/client/delete/")
-async def update_client(client_in_db: ClientInDB):
-    if database_clients[client_in_db.cedula]:
-        database_clients.pop(client_in_db.cedula)
-        raise HTTPException(status_code=500, detail="El cliente fue borrado con exito")
+async def update_client(client_in_db: ClientSearch):
+    try:
+        if database_clients[client_in_db.cedula]:
+            database_clients.pop(client_in_db.cedula)
+            return {"El cliente fue borrado con exito"}
+    except:
+        return {"El cliente que intenta borrar no existe"}
 
 #Verificar usuario
 @api.post("/user/auth/")
