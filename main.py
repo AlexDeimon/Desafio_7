@@ -12,6 +12,11 @@ from fastapi import FastAPI, HTTPException
 
 api = FastAPI()
 
+#listar clientes
+@api.get("/clients/")
+async def get_all_clients():
+    return database_clients
+
 #Consultar Cliente
 @api.get("/client/search/")
 async def search_client(client_search: ClientSearch):
