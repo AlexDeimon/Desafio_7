@@ -44,6 +44,6 @@ def get_product(codigo_producto: str):
     else:
         return None
 
- def update_product(product_in_db: ProductInDB): 
+def update_product(product_in_db: ProductInDB): 
     database_products[product_in_db.codigo_product] = product_in_db
     return product_in_db
