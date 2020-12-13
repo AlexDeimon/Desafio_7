@@ -4,10 +4,13 @@ from db.user_db import UserInDB
 from db.user_db import get_user, database_users
 from db.purchase_db import PurchaseInDB
 from db.purchase_db import get_purchase, database_purchases
+from db.product_db import  ProductInDB
+from db.product_db import get_product, update_product
 
 from models.client_models import ClientSearch, ClientIn, ClientOut
 from models.user_models import UserIn, UserOut
 from models.purchase_models import PurchaseSearch, PurchaseIn, PurchaseOut
+from models.product_models import ProductSearch, ProductIn, ProductOut
 
 import datetime
 
@@ -81,3 +84,37 @@ async def update_purchase(purchase_in_db: PurchaseInDB):
         return {"La compra fue creada con exito"}
     else:
         return {"La compra ya existe"}
+
+#Consultar Producto
+@api.get("/product/search/")
+async def search_product(product_search: ProductSearch):
+    product_in_db = get_product(product_search.codigo_producto)
+    if product_in_db == None:
+        return {"El producto no se encuentra en el inventario"}
+    if product_in_db.codigo_producto== product_search.codigo_producto:
+        return product_in_db
+
+#Actualizar Product
+@api.put("/product/update/")
+async def update_product(product_in_db: ProductInDB):
+    database_productS.update({product_in_db.codigo_producto:product_in_db})
+    return database_products[product_in_db.codigo_producto]
+
+#Agregar Product
+@api.post("/product/new/")
+async def add_product(product_in_db: ProductInDB):
+    if product_in_db.codigo_producto not in database_products:
+        database_products[product_in_db.codigo_producto]=product_in_db
+        return {"El producto fue añadido al inventario"}
+    else:
+        return {"El producto ya está en el inventario"}
+
+#Eliminar Product
+@api.post("/product/delete/")
+async def delete_product(product_in_db: ProductSearch):
+    try:
+        if database_products[product_in_db.codigo_producto]:
+            database_products.pop(product_in_db.codigo_producto)
+            return {"El producto fue removido del inventario"}
+    except:
+        return {"El producto que intenta borrar no está en el inventario"}
