@@ -5,7 +5,7 @@ from db.user_db import get_user, database_users
 from db.purchase_db import PurchaseInDB
 from db.purchase_db import get_purchase, database_purchases
 from db.product_db import  ProductInDB
-from db.product_db import get_product, update_product
+from db.product_db import get_product, update_product, database_products
 
 from models.client_models import ClientSearch, ClientIn, ClientOut
 from models.user_models import UserIn, UserOut
@@ -97,7 +97,7 @@ async def search_product(product_search: ProductSearch):
 #Actualizar Product
 @api.put("/product/update/")
 async def update_product(product_in_db: ProductInDB):
-    database_productS.update({product_in_db.codigo_producto:product_in_db})
+    database_products.update({product_in_db.codigo_producto:product_in_db})
     return database_products[product_in_db.codigo_producto]
 
 #Agregar Product

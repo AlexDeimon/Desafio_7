@@ -16,26 +16,25 @@ database_products = {
                             "precio":"2100000",
                             "cantidad_disponible":"666" }),
 
-     "NV23415": ProductInDB(**{"codigo_producto":"NV23415",
+    "NV23415": ProductInDB(**{"codigo_producto":"NV23415",
                             "nombre_producto":"Nevecon Whirlpool",
                             "precio":"4600000",
                             "cantidad_disponible":"34" }),
 
-     "LV45678": ProductInDB(**{"codigo_producto":"LV45678",
+    "LV45678": ProductInDB(**{"codigo_producto":"LV45678",
                             "nombre_producto":"Lavadora LG 18k",
                             "precio":"1400000",
                             "cantidad_disponible":"55" }),
 
-     "MN12986": ProductInDB(**{"codigo_producto":"MN12986",
+    "MN12986": ProductInDB(**{"codigo_producto":"MN12986",
                             "nombre_producto":"Monitor LG 25 pulg",
                             "precio":"800000",
                             "cantidad_disponible":"120" }),
 
-      "HM78546": ProductInDB(**{"codigo_producto":"HM78546",
+    "HM78546": ProductInDB(**{"codigo_producto":"HM78546",
                             "nombre_producto":"Horno microondas oster 20l",
                             "precio":"240000",
                             "cantidad_disponible":"70" })                                             
-   
 }
 
 def get_product(codigo_producto: str):
