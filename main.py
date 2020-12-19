@@ -18,10 +18,14 @@ from fastapi import FastAPI, HTTPException
 
 api = FastAPI()
 
-#listar clientes
-@api.get("/clients/")
-async def get_all_clients():
-    return database_clients
+#mensaje de bienvenida del usuario
+@api.get("/home/{username}")
+async def get_balance(username: str):
+    user_in_db = get_user(username)
+    if user_in_db == None:
+        raise HTTPException(status_code=404,detail="El usuario no existe")
+    user_out = UserOut(**user_in_db.dict())
+    return user_out
 
 #Consultar Cliente
 @api.post("/client/search/")
@@ -35,8 +39,12 @@ async def search_client(client_search: ClientSearch):
 #Actualizar Cliente
 @api.put("/client/update/")
 async def update_client(client_in_db: ClientInDB):
-    database_clients.update({client_in_db.cedula:client_in_db})
-    return database_clients[client_in_db.cedula]
+    try:
+        if database_clients[client_in_db.cedula]:
+            database_clients.update({client_in_db.cedula:client_in_db})
+            return {"El cliente fue actualizado con exito"}
+    except:
+        return {"El cliente que intenta actualizar no existe"}
 
 #Agregar Cliente
 @api.post("/client/new/")
@@ -97,8 +105,12 @@ async def search_product(product_search: ProductSearch):
 #Actualizar Product
 @api.put("/product/update/")
 async def update_product(product_in_db: ProductInDB):
-    database_products.update({product_in_db.codigo_producto:product_in_db})
-    return database_products[product_in_db.codigo_producto]
+    try:
+        if database_products[product_in_db.codigo_producto]:
+            database_products.update({product_in_db.codigo_producto:product_in_db})
+            return {"El producto fue actualizado con exito"}
+    except:
+        return {"El producto que intenta actualizar no existe"}
 
 #Agregar Product
 @api.post("/product/new/")
