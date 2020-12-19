@@ -24,7 +24,7 @@ async def get_all_clients():
     return database_clients
 
 #Consultar Cliente
-@api.get("/client/search/")
+@api.post("/client/search/")
 async def search_client(client_search: ClientSearch):
     client_in_db = get_client(client_search.cedula)
     if client_in_db == None:
@@ -68,7 +68,7 @@ async def auth_user(user_in: UserIn):
     return {"¡Acceso exitoso! ¡Bienvenido!"}
 
 #Consultar Compra
-@api.get("/purchase/search/")
+@api.post("/purchase/search/")
 async def search_purchase(purchase_search: PurchaseSearch):
     purchase_in_db = get_purchase(purchase_search.id_compra)
     if purchase_in_db == None:
@@ -86,7 +86,7 @@ async def update_purchase(purchase_in_db: PurchaseInDB):
         return {"La compra ya existe"}
 
 #Consultar Producto
-@api.get("/product/search/")
+@api.post("/product/search/")
 async def search_product(product_search: ProductSearch):
     product_in_db = get_product(product_search.codigo_producto)
     if product_in_db == None:
