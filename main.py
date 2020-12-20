@@ -12,11 +12,22 @@ from models.user_models import UserIn, UserOut
 from models.purchase_models import PurchaseSearch, PurchaseIn, PurchaseOut
 from models.product_models import ProductSearch, ProductIn, ProductOut
 
+from fastapi.middleware.cors import CORSMiddleware
+
 import datetime
 
 from fastapi import FastAPI, HTTPException
 
 api = FastAPI()
+
+origins = [
+    "http://localhost.tiangolo.com", "https://localhost.tiangolo.com",
+    "http://localhost", "http://localhost:8080",
+]
+api.add_middleware(
+    CORSMiddleware, allow_origins=origins,
+    allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
+)
 
 #mensaje de bienvenida del usuario
 @api.get("/home/{username}")
@@ -26,6 +37,11 @@ async def get_balance(username: str):
         raise HTTPException(status_code=404,detail="El usuario no existe")
     user_out = UserOut(**user_in_db.dict())
     return user_out
+
+#listar clientes
+@api.get("/clients/")
+async def get_all_clients():
+    return database_clients
 
 #Consultar Cliente
 @api.post("/client/search/")
@@ -75,6 +91,11 @@ async def auth_user(user_in: UserIn):
         return {"Usuario o contraseña incorrectos"}
     return {"¡Acceso exitoso! ¡Bienvenido!"}
 
+#listar compras
+@api.get("/purchase/")
+async def get_all_purchases():
+    return database_purchases
+
 #Consultar Compra
 @api.post("/purchase/search/")
 async def search_purchase(purchase_search: PurchaseSearch):
@@ -92,6 +113,11 @@ async def update_purchase(purchase_in_db: PurchaseInDB):
         return {"La compra fue creada con exito"}
     else:
         return {"La compra ya existe"}
+
+#listar productos
+@api.get("/product/")
+async def get_all_products():
+    return database_products
 
 #Consultar Producto
 @api.post("/product/search/")
