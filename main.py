@@ -92,7 +92,7 @@ async def auth_user(user_in: UserIn):
     return {"¡Acceso exitoso! ¡Bienvenido!"}
 
 #listar compras
-@api.get("/purchase/")
+@api.get("/purchases/")
 async def get_all_purchases():
     return database_purchases
 
@@ -115,7 +115,7 @@ async def update_purchase(purchase_in_db: PurchaseInDB):
         return {"La compra ya existe"}
 
 #listar productos
-@api.get("/product/")
+@api.get("/products/")
 async def get_all_products():
     return database_products
 
